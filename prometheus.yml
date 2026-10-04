@@ -1,0 +1,19 @@
+global:
+  scrape_interval: 10s       # How frequently to scrape targets
+  #evaluation_interval: 10s   # How frequently to evaluate alerting/recording rules
+  #scrape_timeout: 5s         # Timeout before a scrape request fails
+
+scrape_configs:
+  - job_name: 'ai-chatbot-monitor'
+    metrics_path: '/actuator/prometheus'
+    scrape_interval: 5s      # Can override global interval for faster local feedback
+    static_configs:
+      - targets: ['host.docker.internal:8080']
+        labels:
+          application: 'ai-chatbot-monitor'
+          environment: 'local'
+
+  # Optional: Let Prometheus monitor itself
+  #- job_name: 'prometheus'
+  #  static_configs:
+  #    - targets: ['localhost:9090']
